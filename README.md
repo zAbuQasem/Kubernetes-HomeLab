@@ -1,7 +1,7 @@
 
-# K8s HomeLab
+# Kubernetes HomeLab
 ## Overview
-K8s HomeLab is a project designed to provide a hands-on environment for learning and experimenting with Kubernetes clusters. It is built on [vagrant-kubeadm-kubernetes](https://github.com/techiescamp/vagrant-kubeadm-kubernetes) with some security realted features.
+Kubernetes HomeLab is a project designed to provide a hands-on environment for learning and experimenting with Kubernetes clusters. It is built on [vagrant-kubeadm-kubernetes](https://github.com/techiescamp/vagrant-kubeadm-kubernetes) with some security realted features.
 
 ## Features
 - Nginx-Ingress using [MetalLB](https://metallb.universe.tf/)
