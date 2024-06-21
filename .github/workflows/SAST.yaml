@@ -1,0 +1,46 @@
+name: Static Security Scan
+on:
+  - pull_request
+  - push
+
+jobs:
+  semgrep:
+    name: Static Code Analysis
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4.1.1
+        with:
+          # 0 indicates all history for all branches and tags.
+          fetch-depth: 0
+
+      - name: Install dependencies
+        run : |
+          sudo apt install python3-pip jq
+    
+      - name: Install Semgrep
+        run: | 
+            pip install semgrep
+
+      - name: Run Semgrep Scan
+        run: |
+          semgrep --config=auto --json --output semgrep-results.json
+          if grep -qE "(MEDIUM|HIGH|CRITICAL)" semgrep-results.json; then
+            cat semgrep-results.json | jq  -c '[.results[] | {Path: .extra.path, Line_Number: .end.line , Check: .check_id, Message: .extra.message , impact: .extra.metadata.impact, Fix: .extra.fix }]' | jq  >&2
+          fi
+
+  gitleaks:
+    name: Scaning for leaked credentails
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4.1.1
+        with:
+          # 0 indicates all history for all branches and tags.
+          fetch-depth: 0
+      - uses: gitleaks/gitleaks-action@v2.3.4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run Gitleaks Scan
+        # Gitleaks will fail with "1" when secrets detected
+        run: |
+          gitleaks detect --verbose --redact -f gitleaks-results.txt

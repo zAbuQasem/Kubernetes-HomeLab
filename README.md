@@ -41,6 +41,7 @@ cd infrastructure/connaisseur
 
 
 ## Roadmap
-- Build a Github Action CI to build and sign container images and push them to Container Registry.
-- Build a SAST Github action.
-- Create users and groups with least privilege in mind.
+- ~~Build a Github Action CI to build and sign container images and push them to Container Registry.~~
+- ~~Build a SAST Github action.~~
+- Create ArgoCd App of Apps Deployment.
+- Create Users and Groups with least privilege in mind.
