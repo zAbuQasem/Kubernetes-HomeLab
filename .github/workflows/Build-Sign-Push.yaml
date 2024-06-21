@@ -13,8 +13,9 @@ on:
         default: 'v0.0.1'
 
 env:
-  TAG: "${{ github.event.inputs.tag  || github.ref_name }}"
   REPO: "zeyadabuqasem/django"
+  TAG: "${{ github.event.inputs.tag  || github.ref_name }}"
+  
 
 
 jobs:
@@ -56,7 +57,7 @@ jobs:
           uses: docker/build-push-action@v5
           id: build-and-push
           with:
-            context: "{{defaultContext}}:/Django-app" # Path to Dockerfile
+            context: "{{defaultContext}}:/django-app" # Path to Dockerfile
             platforms: linux/amd64
             push: true
             tags: ${{ env.REPO }}:${{ env.TAG }}

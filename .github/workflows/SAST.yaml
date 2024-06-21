@@ -23,13 +23,13 @@ jobs:
 
       - name: Run Semgrep Scan
         run: |
-          semgrep --config=auto --json --output semgrep-results.json
+          semgrep --config=auto ./django-app --json --output semgrep-results.json
           if grep -qE "(MEDIUM|HIGH|CRITICAL)" semgrep-results.json; then
             cat semgrep-results.json | jq  -c '[.results[] | {Path: .extra.path, Line_Number: .end.line , Check: .check_id, Message: .extra.message , impact: .extra.metadata.impact, Fix: .extra.fix }]' | jq  >&2
           fi
 
   gitleaks:
-    name: Scaning for leaked credentails
+    name: Scanning for leaked credentails
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4.1.1
